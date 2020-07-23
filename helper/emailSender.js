@@ -1,19 +1,20 @@
 const { transporter } = require("../startup/emailSender");
+const { deletePdf } = require("../helper/pdfDestroyer");
 
 async function emailSender(pdf, data) {
-  let info = transporter.sendMail({
+  let info = await transporter.sendMail({
     from: '"HomeLess Project" <progetto-diana@libero.it>',
-    to: "mariocavaiola@libero.it",
-    subject: "That's your document!",
-    text: "Hi, that's your document!",
-    html: "Hi, that's your document!",
-    /*
-        attachments: [
-            {
-             path: ''
-            }
-         ]*/
+    to: data.email,
+    subject: "that's your document!",
+    html: "Hi that's your document!",
+
+    attachments: [
+      {
+        path: pdf,
+      },
+    ],
   });
+  deletePdf(pdf);
 }
 
 exports.emailSender = emailSender;
