@@ -27,12 +27,6 @@ function markdownEditFile(data) {
           data.name +
           "\n surname: " +
           data.surname +
-          "\n birthday: " +
-          data.birthday_month +
-          "/" +
-          data.birthday_day +
-          "/" +
-          data.birthday_year +
           "\n day: " +
           data.month +
           "/" +
@@ -41,12 +35,8 @@ function markdownEditFile(data) {
           data.year +
           "\n street: " +
           data.street +
-          "\n city: " +
-          data.city +
-          "\n cap: " +
-          data.cap +
-          "\n to: " +
-          data.to +
+          "\n cash: " +
+          data.cash +
           "\n...\n",
         function (err) {
           if (err) {
@@ -65,12 +55,6 @@ function markdownEditFile(data) {
           data.name +
           "\n surname: " +
           data.surname +
-          "\n birthday: " +
-          data.birthday_day +
-          "/" +
-          data.birthday_month +
-          "/" +
-          data.birthday_year +
           "\n day: " +
           data.day +
           "/" +
@@ -79,12 +63,8 @@ function markdownEditFile(data) {
           data.year +
           "\n street: " +
           data.street +
-          "\n city: " +
-          data.city +
-          "\n cap: " +
-          data.cap +
-          "\n to: " +
-          data.to +
+          "\n cash: " +
+          data.cash +
           "\n...\n",
         function (err) {
           if (err) {

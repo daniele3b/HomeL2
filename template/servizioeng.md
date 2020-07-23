@@ -1,27 +1,9 @@
-![](..\assets\logo.png)
+Dear Sir / Madam $name$ $surname$
 
-    															$name$ $surname$
-    															$street$
-    															$city$ $cap$
+as the owner of the property located in $street$, which you rented under the contract signed in $day$ data, I note that today it is not yet available to pay the amount of € $cash$ you paid title of rent and expenses with reference to the months of December.
 
-$day$ \
-HomeLess \
-Via Firenze,17 \
-Terracina 123
+The invitation, therefore, to pay the amount of € $cash$, no later than 10 days from the receipt of this letter, informing you that, in the absence of payment within the aforementioned term, you will be forced to take legal action in your comparisons, without notice, also by means of an eviction procedure for arrears, with the charge of expenses and any further charges borne exclusively by him.
 
-\
-\
-\
-Dear $to$
-Parramatta Local Court, Case number 2011/000012
-Your ref: BAL12345
-I refer to your letter dated 10 October 2011.
+This is valid for all legal purposes, including as formal formal notice.
 
-I deny that I owe your client any money at all. I hired your client to do gardening work at my property, but your client failed to do any of the work agreed upon, and in fact did not do any work on my property at all.
-As a result, I had to hire another gardener to do the work your client had originally agreed to do. I enclose a receipt for the gardening work performed by the other gardener.​
-
-I ask that your client file a Notice of Discontinuance and that a copy of the sealed Notice of Discontinuance be served on me within 7 days of the date of this letter.
-
-Yours faithfully,
-
-$name$ $surname$
+With best regards

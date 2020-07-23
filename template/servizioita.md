@@ -1,27 +1,9 @@
-![](..\assets\logo.png)
+Egregio Signor/ Gentile Signora $name$ $surname$
 
-    															$name$ $surname$
-    															$street$
-    															$city$ $cap$
+in qualità di proprietario dell'immobile sito in $street$ , da lei condotto in locazione in forza del contratto sottoscritto in data $day$ rilevo che ad oggi non ha ancora provveduto al pagamento dell'importo di € $cash$ da Lei dovuto a titolo di canoni di locazione e spese con riferimento ai mesi di Dicembre .
 
-$day$ \
-HomeLess \
-Via Firenze,17 \
-Terracina 123
+La invito quindi a provvedere al pagamento dell'importo di € $cash$ , entro e non oltre il termine di 10 giorni dal ricevimento della presente, avvisandola che, in mancanza di pagamento nel termine predetto, sarò costretto a adire giudizialmente nei suoi confronti, senza ulteriore avviso, anche mediante un procedimento di sfratto per morosità, con addebito di spese e di ogni ulteriore onere a suo esclusivo carico.
 
-\
-\
-\
-Caro $to$
-Roma corte legale, Caso numero 2011/000012
-Il tuo rif: BAL12345
-Ti riporto la tua lettera datata 10 Ottobre 2011
+La presente vale a ogni effetto di legge, anche quale formale costituzione in mora.
 
-Nego di dover del denaro al tuo cliente. Ho assunto il tuo cliente per fare lavori di giardinaggio nella mia proprietà, ma il tuo cliente non è riuscito a svolgere nessuno dei lavori concordati, e in effetti non ha fatto alcun lavoro sulla mia proprietà.
-Di conseguenza, ho dovuto assumere un altro giardiniere per fare il lavoro che il tuo cliente aveva inizialmente accettato di fare. Allego una ricevuta per il lavoro di giardinaggio svolto dall'altro giardiniere.
-
-Chiedo che il tuo cliente presenti una notifica di interruzione e che una copia della notifica di interruzione sigillata mi venga notificata entro 7 giorni dalla data della presente lettera.
-
-Distinti saluti,
-
-$name$ $surname$
+Distinti saluti
