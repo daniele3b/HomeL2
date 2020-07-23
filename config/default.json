@@ -4,6 +4,6 @@
   "tmp_location": "./tmp/",
   "amqp_exchange": "HomeLess-exchange",
   "amqp_server": "amqp://localhost",
-  "amqp_binding_key": "1",
+  "amqp_binding_key": "2",
   "out_location": "./pdf/"
 }

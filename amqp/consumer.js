@@ -42,13 +42,14 @@ function receiveInfo() {
                   config.get("amqp_binding_key") +
                   "] Received info!"
               );
-              console.log(JSON.parse(msg.content));
 
               const info = JSON.parse(msg.content);
+              console.log(info);
 
               CreatePdf({
                 name: info.name,
                 surname: info.surname,
+                email: info.email,
                 birthday_day: info.birthday_day,
                 birthday_month: info.birthday_month,
                 birthday_year: info.birthday_year,
