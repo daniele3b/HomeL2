@@ -1,0 +1,9 @@
+{
+  "template_location": "./template/",
+  "template_name": "servizio",
+  "tmp_location": "./tmp/",
+  "amqp_exchange": "HomeLess-exchange",
+  "amqp_server": "amqp://localhost",
+  "amqp_binding_key": "1",
+  "out_location": "./pdf/"
+}
