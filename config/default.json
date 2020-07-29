@@ -5,5 +5,7 @@
   "amqp_exchange": "HomeLess-exchange",
   "amqp_server": "amqp://localhost",
   "amqp_binding_key": "2",
-  "out_location": "./pdf/"
+  "out_location": "./pdf/",
+  "models_location": "./models",
+  "template_location_output": "./template"
 }
