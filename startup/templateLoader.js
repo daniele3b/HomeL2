@@ -34,9 +34,14 @@ function RemoveEscapeChar(file) {
   }
 }
 
-function GenerateTemplate() {
+async function GenerateTemplate() {
   const moveFrom = config.get("models_location");
   var moveTo = config.get("template_location_output");
+  const fls = await fs.promises.readdir(moveTo);
+  if (fls.length > 0) {
+    console.log("Template already converted!");
+    return;
+  }
 
   // Make an async function that gets executed immediately
   (async () => {
