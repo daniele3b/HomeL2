@@ -3,6 +3,7 @@ const config = require("config");
 const util = require("util");
 const { emailSender } = require("./emailSender");
 const exec = util.promisify(require("child_process").exec);
+const { DigitalSign } = require("../helper/digitalSignature");
 
 async function Pandoc(src, out) {
   try {
@@ -110,7 +111,10 @@ function CreatePdf(data) {
     console.log("Created file to convert!");
     Pandoc(src, out).then(() => {
       console.log("PDF created!");
+
       deleteTmpFile(src);
+      //data to be inserted in blockchain
+      const data2chain = DigitalSign(out);
       emailSender(out, data);
       console.log("Started to send email to:" + data.email);
     });

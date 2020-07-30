@@ -35,7 +35,7 @@ function verify(publicKey, file, signature) {
   const doc = fs.readFileSync(file);
   var shaMsgF = crypto.createHash("sha256").update(doc).digest();
 
-  console.log(publicKey.verify(shaMsgF, signature));
+  console.log("Verified: " + publicKey.verify(shaMsgF, signature));
 }
 
 exports.DigitalSign = DigitalSign;
