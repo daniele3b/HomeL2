@@ -2,9 +2,11 @@ const crypto = require("crypto");
 const config = require("config");
 require("dotenv").config();
 const { generateKeyPairSync } = require("crypto");
-const { writeFileSync } = require("fs");
+
+var randomstring = require("randomstring");
 
 function KeyGenerator() {
+  const passphrase = randomstring.generate();
   const { publicKey, privateKey } = generateKeyPairSync("rsa", {
     modulusLength: 4096,
     publicKeyEncoding: {
@@ -15,9 +17,10 @@ function KeyGenerator() {
       type: "pkcs8",
       format: "pem",
       cipher: "aes-256-cbc",
-      passphrase: "top secret",
+      passphrase: passphrase,
     },
   });
+  /*
   var r = crypto.publicEncrypt(
     publicKey,
     Buffer.from(JSON.stringify({ nome: "daniele", cognome: "bufalieri" }))
@@ -27,7 +30,7 @@ function KeyGenerator() {
   var decrypted = crypto.privateDecrypt(
     {
       key: privateKey,
-      passphrase: "top secret",
+      passphrase: passphrase,
     },
     Buffer.from(r)
   );
@@ -35,6 +38,7 @@ function KeyGenerator() {
   var x = decrypted.toString();
   x = JSON.parse(x);
   console.log(x);
+  */
 }
 
 exports.KeyGenerator = KeyGenerator;
