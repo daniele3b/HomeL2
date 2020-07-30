@@ -114,7 +114,8 @@ function CreatePdf(data) {
 
       deleteTmpFile(src);
       //data to be inserted in blockchain
-      const data2chain = DigitalSign(out);
+      if (config.get("digital_signature_active") == "yes")
+        var data2chain = DigitalSign(out);
       emailSender(out, data);
       console.log("Started to send email to:" + data.email);
     });
