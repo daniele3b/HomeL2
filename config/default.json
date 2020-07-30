@@ -7,5 +7,8 @@
   "amqp_binding_key": "2",
   "out_location": "./pdf/",
   "models_location": "./models",
-  "template_location_output": "./template"
+  "template_location_output": "./template",
+  "alg_signature": "rsa",
+  "ec_curve_name": "ed25519",
+  "hashing_function": "sha256"
 }
