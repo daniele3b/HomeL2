@@ -26,7 +26,7 @@ function DigitalSign(file) {
   var pub = pubPoint.encode("hex");
   var PublicKey = ec.keyFromPublic(pub, "hex");
 
-  verify(PublicKey, file, signature);
+  //verify(PublicKey, file, signature);
   return { signature: signature, publickey: PublicKey };
 }
 
