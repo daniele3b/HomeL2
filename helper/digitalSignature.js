@@ -24,10 +24,9 @@ function DigitalSign(file) {
   //get the public key to save in blockchain with signature
   var pubPoint = key.getPublic();
   var pub = pubPoint.encode("hex");
-  var PublicKey = ec.keyFromPublic(pub, "hex");
 
   //verify(PublicKey, file, signature);
-  return { signature: signature, publickey: PublicKey };
+  return { signature: signature, publickey: pub };
 }
 
 // function used to verify signature
