@@ -143,7 +143,11 @@ function CreatePdf(data) {
       //data to be inserted in blockchain
       if (config.get("digital_signature_active") == "yes") {
         var data2chain = DigitalSign(out);
-        var userData = { name: data.name, surname: data.surname };
+        var userData = {
+          name: data.name,
+          surname: data.surname,
+          id: name_file,
+        };
         addTransaction(data2chain, userData);
       }
       emailSender(out, data);
