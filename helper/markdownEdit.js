@@ -131,7 +131,8 @@ function addTransaction(data2chain, userData) {
 }
 
 function CreatePdf(data) {
-  var name_file = randomstring.generate();
+  var name_file = randomstring.generate({ charset: "alphabetic" });
+
   var src = config.get("tmp_location") + name_file + ".md";
   var out = config.get("out_location") + name_file + ".pdf";
   markdownEditFile(data, name_file).then((v) => {
