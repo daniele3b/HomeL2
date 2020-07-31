@@ -5,8 +5,7 @@ const Blockchain = require("./blockchain");
 
 const config = require("config");
 const port = config.get("port");
-
-const request = require("request-promise");
+const axios = require('axios')
 
 const ledger = new Blockchain();
 
@@ -36,14 +35,17 @@ router.post("/transaction/broadcast", (req, res) => {
   let requestPromises = [];
 
   ledger.networkNodes.forEach((networkNodeUrl) => {
+
+
     const requestOptions = {
-      uri: networkNodeUrl + "/transaction",
-      method: "POST",
-      body: { newTransaction: newTransaction },
-      json: true,
+      method: "post",
+      url: networkNodeUrl + "/transaction",
+      data: {
+        newTransaction: newTransaction
+      }
     };
 
-    requestPromises.push(request(requestOptions));
+    requestPromises.push(axios(requestOptions));
   });
 
   Promise.all(requestPromises).then((data) => {
@@ -69,14 +71,16 @@ router.get("/mine", (req, res) => {
   const requestPromises = [];
 
   ledger.networkNodes.forEach((networkNodeUrl) => {
-    const requestOptions = {
-      uri: networkNodeUrl + "/receive-new-block",
-      method: "POST",
-      body: { newBlock: newBlock },
-      json: true,
-    };
 
-    requestPromises.push(request(requestOptions));
+    const requestOptions = {
+        url: networkNodeUrl + "/receive-new-block",
+        method: "post",
+        data: {
+          newBlock: newBlock
+        }
+    }
+
+    requestPromises.push(axios(requestOptions));
   });
 
   Promise.all(requestPromises).then((data) => {
@@ -114,9 +118,7 @@ router.post("/register-and-broadcast-node", (req, res) => {
   
   // Register
   const newNodeUrl = req.body.newNodeUrl;
-  if (ledger.networkNodes.indexOf(newNodeUrl) != -1) return res.status(400).send("Node already registered")
-  
-  ledger.networkNodes.push(newNodeUrl);
+  if (ledger.networkNodes.indexOf(newNodeUrl) == -1) ledger.networkNodes.push(newNodeUrl);
 
   const regNodesPromises = [];
 
@@ -124,27 +126,27 @@ router.post("/register-and-broadcast-node", (req, res) => {
   ledger.networkNodes.forEach((networkNodeUrl) => {
     // We hit '/register-node'
     const requestOptions = {
-      uri: networkNodeUrl + "/register-node",
-      method: "POST",
-      body: { newNodeUrl: newNodeUrl },
-      json: true,
+      url: networkNodeUrl + "/register-node",
+      method: "post",
+      data: { 
+        newNodeUrl: newNodeUrl 
+      }
     };
 
-    regNodesPromises.push(request(requestOptions));
+    regNodesPromises.push(axios(requestOptions));
   });
 
   Promise.all(regNodesPromises)
     .then((data) => {
       const bulkRegisterOptions = {
-        uri: newNodeUrl + "/register-nodes-bulk",
-        method: "POST",
-        body: {
+        url: newNodeUrl + "/register-nodes-bulk",
+        method: "post",
+        data: {
           allNetworkNodes: [...ledger.networkNodes, ledger.currentNodeUrl],
-        },
-        json: true,
+        }
       };
 
-      return request(bulkRegisterOptions);
+      return axios(bulkRegisterOptions);
     })
     .then((data) => {
       res.json({ note: "New node registered with network successfully." });
@@ -154,13 +156,10 @@ router.post("/register-and-broadcast-node", (req, res) => {
 // Register a node with the network
 router.post("/register-node", (req, res) => {
   const newNodeUrl = req.body.newNodeUrl;
-  const nodeAlreadyPresent = ledger.networkNodes.indexOf(newNodeUrl) != -1;
-  const currentNode = ledger.currentNodeUrl === newNodeUrl;
+  const nodeNotAlreadyPresent = ledger.networkNodes.indexOf(newNodeUrl) == -1;
+  const notCurrentNode = ledger.currentNodeUrl !== newNodeUrl;
   
-  if(nodeAlreadyPresent) return res.status(400).send("Node already registered")
-  if(currentNode) return res.status(400).send("This node is the current node")
-  
-  ledger.networkNodes.push(newNodeUrl);
+  if(nodeNotAlreadyPresent && notCurrentNode) ledger.networkNodes.push(newNodeUrl);
   
   res.status(200).json({ note: "New node registered successfully." });
 });
@@ -170,13 +169,10 @@ router.post("/register-nodes-bulk", (req, res) => {
   const allNetworkNodes = req.body.allNetworkNodes;
   
   allNetworkNodes.forEach((networkNodeUrl) => {
-    const nodeAlreadyPresent = ledger.networkNodes.indexOf(networkNodeUrl) != -1;
-    const currentNode = ledger.currentNodeUrl === networkNodeUrl;
+    const nodeNotAlreadyPresent = ledger.networkNodes.indexOf(networkNodeUrl) == -1;
+    const notCurrentNode = ledger.currentNodeUrl !== networkNodeUrl;
    
-    if(nodeAlreadyPresent) return res.status(400).send("Node already present")
-    if(currentNode) return res.status(400).send("This node is the current node")
-    
-    ledger.networkNodes.push(networkNodeUrl);
+    if(nodeNotAlreadyPresent && notCurrentNode) ledger.networkNodes.push(networkNodeUrl);
   });
 
   res.status(200).json({ note: "Bulk registration successfull." });
