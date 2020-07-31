@@ -33,7 +33,10 @@ function DigitalSign(file) {
 // function used to verify signature
 function verify(publicKey, file, signature) {
   const doc = fs.readFileSync(file);
-  var shaMsgF = crypto.createHash("sha256").update(doc).digest();
+  var shaMsgF = crypto
+    .createHash(config.get("hashing_function"))
+    .update(doc)
+    .digest();
 
   console.log("Verified: " + publicKey.verify(shaMsgF, signature));
 }
