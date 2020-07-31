@@ -128,7 +128,7 @@ function addTransaction(data2chain, userData) {
       console.log("Transaction added! \n");
     })
     .catch((err) => {
-      console.log("Error adding transaction: " + err);
+      console.log("Error adding transaction: " + err.response.data);
     });
 }
 
