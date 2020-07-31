@@ -14,7 +14,7 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
 router.get("/blockchain", (req, res) => {
-  res.send(ledger);
+  res.status(200).send(ledger);
 });
 
 router.post("/transaction", (req, res) => {
@@ -22,7 +22,7 @@ router.post("/transaction", (req, res) => {
 
   const blockIndex = ledger.addTransactionToPendingTransactions(newTransaction);
 
-  res.json({ note: "Transaction will be added in block " + blockIndex + "." });
+  res.status(200).json({ note: "Transaction will be added in block " + blockIndex + "." });
 });
 
 router.post("/transaction/broadcast", (req, res) => {
@@ -47,11 +47,14 @@ router.post("/transaction/broadcast", (req, res) => {
   });
 
   Promise.all(requestPromises).then((data) => {
-    res.json({ note: "Transaction created and broadcast successfully." });
+    res.status(200).json({ note: "Transaction created and broadcast successfully." });
   });
 });
 
 router.get("/mine", (req, res) => {
+
+  if(ledger.pendingTransactions.length == 0) return res.status(404).send("No pending transactions found => block won't be mined!")
+
   const lastBlock = ledger.getLastBlock();
   const previousBlockHash = lastBlock["hash"];
   const currentBlockData = {
@@ -77,7 +80,7 @@ router.get("/mine", (req, res) => {
   });
 
   Promise.all(requestPromises).then((data) => {
-    res.json({
+    res.status(200).json({
       note: "New block mined & broadcasted successfully",
       block: newBlock,
     });
@@ -94,12 +97,12 @@ router.post("/receive-new-block", (req, res) => {
   if (correctHash && correctIndex) {
     ledger.chain.push(newBlock);
     ledger.pendingTransactions = [];
-    res.json({
+    res.status(200).json({
       note: "New block received and accepted",
       newBlock: newBlock,
     });
   } else {
-    res.json({
+    res.status(400).json({
       note: "New block rejected",
       newBlock: newBlock,
     });
@@ -108,10 +111,12 @@ router.post("/receive-new-block", (req, res) => {
 
 // Register a node and broadcast to the network (ON ITS OWN SERVER)
 router.post("/register-and-broadcast-node", (req, res) => {
+  
   // Register
   const newNodeUrl = req.body.newNodeUrl;
-  if (ledger.networkNodes.indexOf(newNodeUrl) == -1)
-    ledger.networkNodes.push(newNodeUrl);
+  if (ledger.networkNodes.indexOf(newNodeUrl) != -1) return res.status(400).send("Node already registered")
+  
+  ledger.networkNodes.push(newNodeUrl);
 
   const regNodesPromises = [];
 
@@ -149,25 +154,32 @@ router.post("/register-and-broadcast-node", (req, res) => {
 // Register a node with the network
 router.post("/register-node", (req, res) => {
   const newNodeUrl = req.body.newNodeUrl;
-  const nodeNotAlreadyPresent = ledger.networkNodes.indexOf(newNodeUrl) == -1;
-  const notCurrentNode = ledger.currentNodeUrl !== newNodeUrl;
-  if (nodeNotAlreadyPresent && notCurrentNode)
-    ledger.networkNodes.push(newNodeUrl);
-  res.json({ note: "New node registered successfully." });
+  const nodeAlreadyPresent = ledger.networkNodes.indexOf(newNodeUrl) != -1;
+  const currentNode = ledger.currentNodeUrl === newNodeUrl;
+  
+  if(nodeAlreadyPresent) return res.status(400).send("Node already registered")
+  if(currentNode) return res.status(400).send("This node is the current node")
+  
+  ledger.networkNodes.push(newNodeUrl);
+  
+  res.status(200).json({ note: "New node registered successfully." });
 });
 
 // Register multiple nodes at once  (bulk == massa)
 router.post("/register-nodes-bulk", (req, res) => {
   const allNetworkNodes = req.body.allNetworkNodes;
+  
   allNetworkNodes.forEach((networkNodeUrl) => {
-    const nodeNotAlreadyPresent =
-      ledger.networkNodes.indexOf(networkNodeUrl) == -1;
-    const notCurrentNode = ledger.currentNodeUrl !== networkNodeUrl;
-    if (nodeNotAlreadyPresent && notCurrentNode)
-      ledger.networkNodes.push(networkNodeUrl);
+    const nodeAlreadyPresent = ledger.networkNodes.indexOf(networkNodeUrl) != -1;
+    const currentNode = ledger.currentNodeUrl === networkNodeUrl;
+   
+    if(nodeAlreadyPresent) return res.status(400).send("Node already present")
+    if(currentNode) return res.status(400).send("This node is the current node")
+    
+    ledger.networkNodes.push(networkNodeUrl);
   });
 
-  res.json({ note: "Bulk registration successfull." });
+  res.status(200).json({ note: "Bulk registration successfull." });
 });
 
 router.get("/consensus", (req, res) => {
@@ -201,7 +213,7 @@ router.get("/consensus", (req, res) => {
       !newLongestChain ||
       (newLongestChain && !ledger.chainIsValid(newLongestChain))
     ) {
-      res.json({
+      res.status(400).json({
         note: "Current chain has not been replaced.",
         chain: ledger.chain,
       });
@@ -209,7 +221,7 @@ router.get("/consensus", (req, res) => {
       ledger.chain = newLongestChain;
       ledger.pendingTransactions = newPendingTransactions;
 
-      res.json({
+      res.status(200).json({
         note: "This chain has been replaced.",
         chain: ledger.chain,
       });
@@ -218,7 +230,3 @@ router.get("/consensus", (req, res) => {
 });
 
 module.exports = router;
-
-/*app.listen(port, function(){
-    console.log("Listening on port "+port+"...")
-})*/
