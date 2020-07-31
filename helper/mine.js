@@ -1,19 +1,19 @@
-const request = require("request-promise");
+const axios = require("axios");
+
 const config = require("config");
 
 function mine() {
-  var options = {
-    uri: config.get("currentNodeUrl") + config.get("port") + "/mine",
-    method: "GET",
-    json: true,
+  const options = {
+    method: "get",
+    url: config.get("currentNodeUrl") + config.get("port") + "/mine",
   };
 
-  request(options)
+  axios(options)
     .then(() => {
       console.log("Block Mined! \n");
     })
     .catch((err) => {
-      console.log("Error during mine: " + err);
+      console.log("Error during mine: " + err.response.data);
     });
 }
 
