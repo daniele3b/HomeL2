@@ -14,5 +14,6 @@
   "digital_signature_active": "yes",
   "port": "8081",
   "currentNodeUrl": "http://localhost:",
-  "blockChainActive": "yes"
+  "blockChainActive": "yes",
+  "time_mine": "20000"
 }

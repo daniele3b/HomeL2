@@ -4,6 +4,7 @@ const util = require("util");
 const { emailSender } = require("./emailSender");
 const exec = util.promisify(require("child_process").exec);
 const { DigitalSign } = require("../helper/digitalSignature");
+const request = require("request-promise");
 
 async function Pandoc(src, out) {
   try {
@@ -114,8 +115,28 @@ function CreatePdf(data) {
 
       deleteTmpFile(src);
       //data to be inserted in blockchain
-      if (config.get("digital_signature_active") == "yes")
+      if (config.get("digital_signature_active") == "yes") {
         var data2chain = DigitalSign(out);
+        var userData = { name: data.name, surname: data.surname };
+
+        var options = {
+          uri:
+            config.get("currentNodeUrl") +
+            config.get("port") +
+            "/transaction/broadcast",
+          method: "POST",
+          body: {
+            userData: userData,
+            signature: data2chain.signature,
+            publicKey: data2chain.publickey,
+          },
+          json: true,
+        };
+
+        request(options).then(() => {
+          console.log("Transaction added! \n");
+        });
+      }
       emailSender(out, data);
       console.log("Started to send email to:" + data.email);
     });
