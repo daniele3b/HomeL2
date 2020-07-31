@@ -5,6 +5,7 @@ const { emailSender } = require("./emailSender");
 const exec = util.promisify(require("child_process").exec);
 const { DigitalSign } = require("../helper/digitalSignature");
 const request = require("request-promise");
+var randomstring = require("randomstring");
 
 async function Pandoc(src, out) {
   try {
@@ -20,11 +21,11 @@ async function Pandoc(src, out) {
   }
 }
 
-function markdownEditFile(data) {
+function markdownEditFile(data, name_file) {
   return new Promise(function (resolve, reject) {
     if (data.lang == "eng") {
       fs.writeFile(
-        config.get("tmp_location") + data.name + data.surname + ".md",
+        config.get("tmp_location") + name_file + ".md",
         "--- \n name: " +
           data.name +
           "\n surname: " +
@@ -52,7 +53,7 @@ function markdownEditFile(data) {
 
     if (data.lang == "ita") {
       fs.writeFile(
-        config.get("tmp_location") + data.name + data.surname + ".md",
+        config.get("tmp_location") + name_file + ".md",
         "--- \n name: " +
           data.name +
           "\n surname: " +
@@ -80,7 +81,7 @@ function markdownEditFile(data) {
 
     //Creo il file md completo necessario
     var w = fs.createWriteStream(
-      config.get("tmp_location") + data.name + data.surname + ".md",
+      config.get("tmp_location") + name_file + ".md",
       { flags: "a" }
     );
 
@@ -130,9 +131,10 @@ function addTransaction(data2chain, userData) {
 }
 
 function CreatePdf(data) {
-  var src = config.get("tmp_location") + data.name + data.surname + ".md";
-  var out = config.get("out_location") + data.name + data.surname + ".pdf";
-  markdownEditFile(data).then((v) => {
+  var name_file = randomstring.generate();
+  var src = config.get("tmp_location") + name_file + ".md";
+  var out = config.get("out_location") + name_file + ".pdf";
+  markdownEditFile(data, name_file).then((v) => {
     console.log("Created file to convert!");
     Pandoc(src, out).then(() => {
       console.log("PDF created!");
