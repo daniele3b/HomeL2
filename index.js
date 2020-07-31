@@ -4,12 +4,13 @@ const { GenerateTemplate } = require("./startup/templateLoader");
 const config = require("config");
 
 if (config.get("blockChainActive") == "yes") {
-  const request = require("request-promise");
+  const { mine } = require("./helper/mine");
   const port = config.get("port");
   const express = require("express");
   var app = express();
-
   var bodyParser = require("body-parser");
+
+  //setting bodyparser
   app.use(bodyParser.json({ limit: "50mb" }));
   app.use(
     bodyParser.urlencoded({
@@ -18,6 +19,7 @@ if (config.get("blockChainActive") == "yes") {
       parameterLimit: 50000,
     })
   );
+  //setting routes blockchain
   require("./startup/routes")(app);
   app.listen(port, function () {
     console.log("Listening on port " + port + "...");
@@ -25,15 +27,7 @@ if (config.get("blockChainActive") == "yes") {
 
   //set time mine
   setInterval(() => {
-    var options = {
-      uri: config.get("currentNodeUrl") + config.get("port") + "/mine",
-      method: "GET",
-      json: true,
-    };
-
-    request(options).then(() => {
-      console.log("Block Mined! \n");
-    });
+    mine();
   }, config.get("time_mine"));
 }
 

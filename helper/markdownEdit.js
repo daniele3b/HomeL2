@@ -105,6 +105,30 @@ function deleteTmpFile(src) {
   console.log("Temporary file deleted");
 }
 
+function addTransaction(data2chain, userData) {
+  var options = {
+    uri:
+      config.get("currentNodeUrl") +
+      config.get("port") +
+      "/transaction/broadcast",
+    method: "POST",
+    body: {
+      userData: userData,
+      signature: data2chain.signature,
+      publicKey: data2chain.publickey,
+    },
+    json: true,
+  };
+
+  request(options)
+    .then(() => {
+      console.log("Transaction added! \n");
+    })
+    .catch((err) => {
+      console.log("Error adding transaction: " + err);
+    });
+}
+
 function CreatePdf(data) {
   var src = config.get("tmp_location") + data.name + data.surname + ".md";
   var out = config.get("out_location") + data.name + data.surname + ".pdf";
@@ -118,24 +142,7 @@ function CreatePdf(data) {
       if (config.get("digital_signature_active") == "yes") {
         var data2chain = DigitalSign(out);
         var userData = { name: data.name, surname: data.surname };
-
-        var options = {
-          uri:
-            config.get("currentNodeUrl") +
-            config.get("port") +
-            "/transaction/broadcast",
-          method: "POST",
-          body: {
-            userData: userData,
-            signature: data2chain.signature,
-            publicKey: data2chain.publickey,
-          },
-          json: true,
-        };
-
-        request(options).then(() => {
-          console.log("Transaction added! \n");
-        });
+        addTransaction(data2chain, userData);
       }
       emailSender(out, data);
       console.log("Started to send email to:" + data.email);
