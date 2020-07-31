@@ -2,16 +2,19 @@
   "template_location": "./template/",
   "template_name": "servizio",
   "tmp_location": "./tmp/",
-  "amqp_exchange": "HomeLess-exchange",
-  "amqp_server": "amqp://localhost",
-  "amqp_binding_key": "2",
   "out_location": "./pdf/",
   "models_location": "./models",
   "template_location_output": "./template",
+
+  "amqp_exchange": "HomeLess-exchange",
+  "amqp_server": "amqp://localhost",
+  "amqp_binding_key": "2",
+
   "alg_signature": "rsa",
   "ec_curve_name": "ed25519",
   "hashing_function": "sha1",
   "digital_signature_active": "yes",
+
   "port": "8081",
   "currentNodeUrl": "http://localhost:",
   "blockChainActive": "yes",
