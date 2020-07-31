@@ -15,8 +15,11 @@
   "hashing_function": "sha1",
   "digital_signature_active": "yes",
 
-  "port": "8081",
+  "port": "8082",
   "currentNodeUrl": "http://localhost:",
   "blockChainActive": "yes",
-  "time_mine": "20000"
+  "time_mine": "20000",
+
+  "HomeLess": "http://localhost:8080",
+  "homel_1": "http://localhost:8081"
 }

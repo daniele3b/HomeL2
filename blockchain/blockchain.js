@@ -8,7 +8,7 @@ function Blockchain() {
   this.pendingTransactions = [];
 
   this.currentNodeUrl = currentNodeUrl;
-  this.networkNodes = [];
+  this.networkNodes = [config.get('HomeLess')];
 
   this.createNewBlock(0, "0", "0"); // Genesis Block
 }
