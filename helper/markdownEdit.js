@@ -4,7 +4,7 @@ const util = require("util");
 const { emailSender } = require("./emailSender");
 const exec = util.promisify(require("child_process").exec);
 const { DigitalSign } = require("../helper/digitalSignature");
-const request = require("request-promise");
+const axios = require("axios");
 var randomstring = require("randomstring");
 
 async function Pandoc(src, out) {
@@ -108,20 +108,19 @@ function deleteTmpFile(src) {
 
 function addTransaction(data2chain, userData) {
   var options = {
-    uri:
+    url:
       config.get("currentNodeUrl") +
       config.get("port") +
       "/transaction/broadcast",
-    method: "POST",
-    body: {
+    method: "post",
+    data: {
       userData: userData,
       signature: data2chain.signature,
       publicKey: data2chain.publickey,
     },
-    json: true,
   };
 
-  request(options)
+  axios(options)
     .then(() => {
       console.log("Transaction added! \n");
     })

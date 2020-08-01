@@ -25,19 +25,7 @@ function DigitalSign(file) {
   var pubPoint = key.getPublic();
   var pub = pubPoint.encode("hex");
 
-  //verify(PublicKey, file, signature);
   return { signature: signature, publickey: pub };
-}
-
-// function used to verify signature
-function verify(publicKey, file, signature) {
-  const doc = fs.readFileSync(file);
-  var shaMsgF = crypto
-    .createHash(config.get("hashing_function"))
-    .update(doc)
-    .digest();
-
-  console.log("Verified: " + publicKey.verify(shaMsgF, signature));
 }
 
 exports.DigitalSign = DigitalSign;
