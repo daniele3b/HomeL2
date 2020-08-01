@@ -1,10 +1,11 @@
 const amqp = require("amqplib/callback_api");
 const config = require("config");
 const { CreatePdf } = require("../helper/markdownEdit.js");
-const {decryptData} = require("../helper/keyGenerator")
+const { decryptData } = require("../helper/keyGenerator");
+const { decipherSym } = require("../helper/decipherSym");
+require("dotenv").config();
 
 function receiveInfo() {
-
   amqp.connect(config.get("amqp_server"), function (error0, connection) {
     if (error0) {
       throw error0;
@@ -44,19 +45,28 @@ function receiveInfo() {
                   config.get("amqp_binding_key") +
                   "] Received info!"
               );
-              
+
               // Receiving info
               let info = JSON.parse(msg.content);
-              if(config.get("RSA_encrypted_active") == "yes"){
-                  console.log("INFO CRIPTATE RICEVUTE")
-                  console.log(info)
-                
+              if (config.get("RSA_encrypted_active") == "yes") {
+                if (process.env.ASYM_ENC_ACTIVE == "yes") {
+                  console.log("INFO CRIPTATE RICEVUTE");
+                  console.log(info);
+
                   // Decrypting info
-                  info = decryptData(info)
-                  console.log("INFO DECRIPTATE RICEVUTE")
-                  console.log(info);   
-              }
-              else console.log(info);
+                  info = decryptData(info);
+                  console.log("INFO DECRIPTATE RICEVUTE");
+                  console.log(info);
+                } else {
+                  console.log("INFO CRIPTATE RICEVUTE");
+                  console.info(info);
+
+                  // Decrypting info
+                  info = decipherSym(info);
+                  console.log("INFO DECRIPTATE RICEVUTE");
+                  console.log(info);
+                }
+              } else console.log(info);
 
               CreatePdf({
                 name: info.name,
