@@ -16,6 +16,7 @@
   "digital_signature_active": "yes",
 
   "RSA_encrypted_active": "yes",
+  "algorithm_cipher": "aes-192-cbc",
 
   "port": "8082",
   "currentNodeUrl": "http://localhost:",
