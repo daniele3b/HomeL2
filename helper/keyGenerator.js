@@ -24,13 +24,6 @@ function KeyGenerator() {
   console.log(decryptData(data, privateKey));
 }
 
-function encryptData(data, publicKey) {
-  var dataCrypted = crypto.publicEncrypt(
-    publicKey,
-    Buffer.from(JSON.stringify(data))
-  );
-  return dataCrypted;
-}
 function decryptData(dataCrypted, privateKey) {
   var decrypted = crypto.privateDecrypt(
     {
