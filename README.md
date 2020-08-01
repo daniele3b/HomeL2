@@ -31,6 +31,6 @@ After installing, you have to follow these instructions:
 # Others repositories
 
 * [HomeLess](https://github.com/daniele3b/HomeLess)
-* [Homel_2](https://github.com/daniele3b/HomeL2)
+* [Homel_1](https://github.com/daniele3b/HomeL1)
 
 
