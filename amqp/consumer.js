@@ -45,7 +45,7 @@ function receiveInfo() {
                   "] Received info!"
               );
               
-              // Receiving encrypted info
+              // Receiving info
               let info = JSON.parse(msg.content);
               if(config.get("RSA_encrypted_active") == "yes"){
                   console.log("INFO CRIPTATE RICEVUTE")
@@ -53,9 +53,10 @@ function receiveInfo() {
                 
                   // Decrypting info
                   info = decryptData(info)
-                  console.log("INFO DECRIPTATE RICEVUTE")   
+                  console.log("INFO DECRIPTATE RICEVUTE")
+                  console.log(info);   
               }
-              console.log(info);
+              else console.log(info);
 
               CreatePdf({
                 name: info.name,
