@@ -6,6 +6,8 @@ const { generateKeyPairSync } = require("crypto");
 var randomstring = require("randomstring");
 const passphrase = randomstring.generate();
 
+let prvk
+
 function KeyGenerator() {
   const { publicKey, privateKey } = generateKeyPairSync("rsa", {
     modulusLength: 4096,
@@ -20,8 +22,10 @@ function KeyGenerator() {
       passphrase: passphrase,
     },
   });
-  var data = encryptData({ nome: "daniele", cognome: "bufalieri" }, publicKey);
-  console.log(decryptData(data, privateKey));
+
+  prvk = privateKey
+
+  return publicKey
 }
 
 function encryptData(data, publicKey) {
@@ -31,10 +35,10 @@ function encryptData(data, publicKey) {
   );
   return dataCrypted;
 }
-function decryptData(dataCrypted, privateKey) {
+function decryptData(dataCrypted) {
   var decrypted = crypto.privateDecrypt(
     {
-      key: privateKey,
+      key: prvk,
       passphrase: passphrase,
     },
     Buffer.from(dataCrypted)
@@ -45,4 +49,6 @@ function decryptData(dataCrypted, privateKey) {
   return data;
 }
 
-exports.KeyGenerator = KeyGenerator;
+exports.KeyGenerator = KeyGenerator
+exports.prvk = prvk
+exports.decryptData = decryptData

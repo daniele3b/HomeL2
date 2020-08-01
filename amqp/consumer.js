@@ -1,8 +1,10 @@
 const amqp = require("amqplib/callback_api");
 const config = require("config");
 const { CreatePdf } = require("../helper/markdownEdit.js");
+const {decryptData} = require("../helper/keyGenerator")
 
 function receiveInfo() {
+
   amqp.connect(config.get("amqp_server"), function (error0, connection) {
     if (error0) {
       throw error0;
@@ -42,8 +44,17 @@ function receiveInfo() {
                   config.get("amqp_binding_key") +
                   "] Received info!"
               );
-
-              const info = JSON.parse(msg.content);
+              
+              // Receiving encrypted info
+              let info = JSON.parse(msg.content);
+              if(config.get("RSA_encrypted_active") == "yes"){
+                  console.log("INFO CRIPTATE RICEVUTE")
+                  console.log(info)
+                
+                  // Decrypting info
+                  info = decryptData(info)
+                  console.log("INFO DECRIPTATE RICEVUTE")   
+              }
               console.log(info);
 
               CreatePdf({
