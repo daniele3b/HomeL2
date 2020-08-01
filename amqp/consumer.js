@@ -52,7 +52,6 @@ function receiveInfo() {
                 if (process.env.ASYM_ENC_ACTIVE == "yes") {
                   console.log("INFO CRIPTATE RICEVUTE");
                   console.log(info);
-
                   // Decrypting info
                   info = decryptData(info);
                   console.log("INFO DECRIPTATE RICEVUTE");
