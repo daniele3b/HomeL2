@@ -43,5 +43,4 @@ function decryptData(dataCrypted, privateKey) {
 }
 
 exports.KeyGenerator = KeyGenerator;
-exports.prvk = prvk;
 exports.decryptData = decryptData;
