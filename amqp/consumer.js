@@ -48,24 +48,34 @@ function receiveInfo() {
 
               // Receiving info
               let info = JSON.parse(msg.content);
+              
+              // If criptography is active
               if (config.get("RSA_encrypted_active") == "yes") {
+
+                // If public key criptography (asymmetric) is active
                 if (process.env.ASYM_ENC_ACTIVE == "yes") {
-                  console.log("INFO CRIPTATE RICEVUTE");
+                  console.log("[ASYMETTRIC] INFO CRIPTATE RICEVUTE");
                   console.log(info);
+
                   // Decrypting info
                   info = decryptData(info);
-                  console.log("INFO DECRIPTATE RICEVUTE");
+                  console.log("[ASYMETTRIC] INFO DECRIPTATE RICEVUTE");
                   console.log(info);
+
+                // If symmetric criptography is active
                 } else {
-                  console.log("INFO CRIPTATE RICEVUTE");
+                  console.log("[SYMETTRIC] INFO CRIPTATE RICEVUTE");
                   console.info(info);
 
                   // Decrypting info
                   info = decipherSym(info);
-                  console.log("INFO DECRIPTATE RICEVUTE");
+                  console.log("[SYMETTRIC] INFO DECRIPTATE RICEVUTE");
                   console.log(info);
                 }
-              } else console.log(info);
+              } 
+              
+              // If criptography is NOT active
+              else console.log(info);
 
               CreatePdf({
                 name: info.name,
