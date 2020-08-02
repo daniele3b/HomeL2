@@ -48,10 +48,9 @@ function receiveInfo() {
 
               // Receiving info
               let info = JSON.parse(msg.content);
-              
-              // If criptography is active
-              if (config.get("RSA_encrypted_active") == "yes") {
 
+              // If criptography is active
+              if (config.get("security_active") == "yes") {
                 // If public key criptography (asymmetric) is active
                 if (process.env.ASYM_ENC_ACTIVE == "yes") {
                   console.log("[ASYMETTRIC] INFO CRIPTATE RICEVUTE");
@@ -62,7 +61,7 @@ function receiveInfo() {
                   console.log("[ASYMETTRIC] INFO DECRIPTATE RICEVUTE");
                   console.log(info);
 
-                // If symmetric criptography is active
+                  // If symmetric criptography is active
                 } else {
                   console.log("[SYMETTRIC] INFO CRIPTATE RICEVUTE");
                   console.info(info);
@@ -72,8 +71,8 @@ function receiveInfo() {
                   console.log("[SYMETTRIC] INFO DECRIPTATE RICEVUTE");
                   console.log(info);
                 }
-              } 
-              
+              }
+
               // If criptography is NOT active
               else console.log(info);
 
