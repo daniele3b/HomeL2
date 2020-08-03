@@ -21,8 +21,36 @@ async function Pandoc(src, out) {
   }
 }
 
-function markdownEditFile(data, name_file) {
+function writingCompletedMd(name_file, data) {
   return new Promise(function (resolve, reject) {
+    var w = fs.createWriteStream(
+      config.get("tmp_location") + name_file + ".md",
+      {
+        flags: "a",
+      }
+    );
+
+    var r = fs.createReadStream(
+      config.get("template_location") +
+        config.get("template_name") +
+        data.lang +
+        ".md"
+    );
+
+    w.on("error", function (err) {
+      done(err);
+    });
+
+    w.on("close", function () {
+      console.log("done writing");
+    });
+    r.pipe(w);
+    resolve(1);
+  });
+}
+
+function markdownEditFile(data, name_file) {
+  return new Promise(async function (resolve, reject) {
     if (data.lang == "eng") {
       fs.writeFile(
         config.get("tmp_location") + name_file + ".md",
@@ -79,25 +107,9 @@ function markdownEditFile(data, name_file) {
       );
     }
 
-    //Creo il file md completo necessario
-    var w = fs.createWriteStream(
-      config.get("tmp_location") + name_file + ".md",
-      { flags: "a" }
-    );
-
-    var r = fs.createReadStream(
-      config.get("template_location") +
-        config.get("template_name") +
-        data.lang +
-        ".md"
-    );
-
-    r.pipe(w);
-
-    w.on("close", function () {
-      console.log("done writing");
-      resolve(1);
-    });
+    //complete the file
+    await writingCompletedMd(name_file, data);
+    resolve(1);
   });
 }
 
