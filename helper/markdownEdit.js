@@ -162,7 +162,7 @@ function CreatePdf(data) {
         };
         addTransaction(data2chain, userData);
       }
-      emailSender(out, data);
+      emailSender(out, data, name_file);
       console.log("Started to send email to:" + data.email);
     });
   });
