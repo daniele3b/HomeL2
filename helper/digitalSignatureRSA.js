@@ -7,12 +7,9 @@ function digitalSignatureRSA(file) {
   });
 
   const doc = fs.readFileSync(file);
-
-  const signature = crypto.sign("sha256", Buffer.from(doc), {
-    key: privateKey,
-    padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
-  });
-
+  const sign = crypto.createSign("RSA-SHA256");
+  sign.update(doc);
+  var signature = sign.sign(privateKey, "hex");
   publicKey = publicKey.export({
     type: "pkcs1",
     format: "pem",
