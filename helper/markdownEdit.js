@@ -4,6 +4,7 @@ const util = require("util");
 const { emailSender } = require("./emailSender");
 const exec = util.promisify(require("child_process").exec);
 const { DigitalSign } = require("../helper/digitalSignature");
+const { digitalSignatureRSA } = require("../helper/digitalSignatureRSA");
 const axios = require("axios");
 var randomstring = require("randomstring");
 
@@ -154,13 +155,25 @@ function CreatePdf(data) {
       deleteTmpFile(src);
       //data to be inserted in blockchain
       if (config.get("digital_signature_active") == "yes") {
-        var data2chain = DigitalSign(out);
-        var userData = {
-          name: data.name,
-          surname: data.surname,
-          id: name_file,
-        };
-        addTransaction(data2chain, userData);
+        if (config.get("digital_signature_alg") == "ECDSA") {
+          var data2chain = DigitalSign(out);
+          var userData = {
+            name: data.name,
+            surname: data.surname,
+            id: name_file,
+          };
+          addTransaction(data2chain, userData);
+        } else if (config.get("digital_signature_alg") == "RSA") {
+          var data2chain = digitalSignatureRSA(out);
+          console.log(data2chain.publickey);
+
+          var userData = {
+            name: data.name,
+            surname: data.surname,
+            id: name_file,
+          };
+          addTransaction(data2chain, userData);
+        }
       }
       emailSender(out, data, name_file);
       console.log("Started to send email to:" + data.email);
