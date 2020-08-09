@@ -85,7 +85,7 @@ function receiveInfo() {
                 street: info.street,
                 cash: info.cash,
                 email: info.email,
-                lang: "eng",
+                lang: info.lang,
               });
             },
             {
