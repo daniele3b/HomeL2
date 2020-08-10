@@ -107,6 +107,34 @@ function markdownEditFile(data, name_file) {
         }
       );
     }
+    if (data.lang == "arb") {
+      console.log("arabo");
+      fs.writeFile(
+        config.get("tmp_location") + name_file + ".md",
+        "--- \n name: " +
+          data.name +
+          "\n surname: " +
+          data.surname +
+          "\n day: " +
+          data.day +
+          "/" +
+          data.month +
+          "/" +
+          data.year +
+          "\n street: " +
+          data.street +
+          "\n cash: " +
+          data.cash +
+          "\n...\n",
+        function (err) {
+          if (err) {
+            reject(-1);
+            throw err;
+          }
+          console.log("File is created successfully.");
+        }
+      );
+    }
 
     //complete the file
     await writingCompletedMd(name_file, data);
@@ -144,7 +172,7 @@ function addTransaction(data2chain, userData) {
 
 function CreatePdf(data) {
   var name_file = randomstring.generate({ charset: "alphabetic" });
-
+  console.log(data.lang);
   var src = config.get("tmp_location") + name_file + ".md";
   var out = config.get("out_location") + name_file + ".pdf";
   markdownEditFile(data, name_file).then((v) => {
