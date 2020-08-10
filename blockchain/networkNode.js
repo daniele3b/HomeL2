@@ -32,7 +32,7 @@ router.post("/transaction/broadcast", (req, res) => {
     req.body.signature,
     req.body.publicKey
   );
-  console.log("TRANSACTION :" + req.body.publicKey);
+
   ledger.addTransactionToPendingTransactions(newTransaction);
 
   let requestPromises = [];
