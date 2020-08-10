@@ -6,8 +6,8 @@ const config = require("config");
 
 module.exports = function (app) {
   app.use("/", Blockchain);
+  app.use("/", getStatusServer);
   if (config.get("security_active") == "yes") {
     app.use("/", key_RSA_producer);
-    app.use("/", getStatusServer);
   }
 };
