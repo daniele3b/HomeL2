@@ -13,7 +13,7 @@
   "alg_signature": "rsa",
   "ec_curve_name": "ed25519",
   "hashing_function": "sha1",
-  "digital_signature_active": "yes",
+  "digital_signature_active": "no",
   "digital_signature_alg": "RSA",
 
   "security_active": "yes",
@@ -21,7 +21,7 @@
 
   "port": "8082",
   "currentNodeUrl": "http://localhost:",
-  "blockChainActive": "yes",
+  "blockChainActive": "no",
   "time_mine": "20000",
 
   "HomeLess": "http://localhost:8080",
