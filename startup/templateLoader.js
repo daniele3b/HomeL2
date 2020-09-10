@@ -81,3 +81,5 @@ async function GenerateTemplate() {
 }
 
 exports.GenerateTemplate = GenerateTemplate;
+exports.PandocDocx2Md = PandocDocx2Md;
+exports.RemoveEscapeChar = RemoveEscapeChar;
