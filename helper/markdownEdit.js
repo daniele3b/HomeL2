@@ -6,6 +6,12 @@ const exec = util.promisify(require("child_process").exec);
 const { DigitalSign } = require("../helper/digitalSignature");
 const { digitalSignatureRSA } = require("../helper/digitalSignatureRSA");
 const axios = require("axios");
+const {
+  headerTemplateWriterT4,
+  headerTemplateWriterT5,
+  headerTemplateWriterT6,
+  headerTemplateWriterT7,
+} = require("./headerTemplateCompiler");
 var randomstring = require("randomstring");
 
 async function Pandoc(src, out) {
@@ -35,6 +41,7 @@ function writingCompletedMd(name_file, data) {
       config.get("template_location") +
         config.get("template_name") +
         data.lang +
+        data.template_id +
         ".md"
     );
 
@@ -53,31 +60,55 @@ function writingCompletedMd(name_file, data) {
 function markdownEditFile(data, name_file) {
   return new Promise(async function (resolve, reject) {
     if (data.lang == "eng") {
-      fs.writeFile(
-        config.get("tmp_location") + name_file + ".md",
-        "--- \n name: " +
-          data.name +
-          "\n surname: " +
-          data.surname +
-          "\n day: " +
-          data.month +
-          "/" +
-          data.day +
-          "/" +
-          data.year +
-          "\n street: " +
-          data.street +
-          "\n cash: " +
-          data.cash +
-          "\n...\n",
-        function (err) {
-          if (err) {
-            throw err;
-            reject(-1);
+      if (data.template_id == "T4") {
+        fs.writeFile(
+          config.get("tmp_location") + name_file + ".md",
+          headerTemplateWriterT4(data),
+          function (err) {
+            if (err) {
+              throw err;
+              reject(-1);
+            }
+            console.log("File is created successfully.");
           }
-          console.log("File is created successfully.");
-        }
-      );
+        );
+      } else if (data.template_id == "T5") {
+        fs.writeFile(
+          config.get("tmp_location") + name_file + ".md",
+          headerTemplateWriterT5(data),
+          function (err) {
+            if (err) {
+              throw err;
+              reject(-1);
+            }
+            console.log("File is created successfully.");
+          }
+        );
+      } else if (data.template_id == "T6") {
+        fs.writeFile(
+          config.get("tmp_location") + name_file + ".md",
+          headerTemplateWriterT6(data),
+          function (err) {
+            if (err) {
+              throw err;
+              reject(-1);
+            }
+            console.log("File is created successfully.");
+          }
+        );
+      } else if (data.template_id == "T7") {
+        fs.writeFile(
+          config.get("tmp_location") + name_file + ".md",
+          headerTemplateWriterT7(data),
+          function (err) {
+            if (err) {
+              throw err;
+              reject(-1);
+            }
+            console.log("File is created successfully.");
+          }
+        );
+      }
     }
 
     if (data.lang == "ita") {
