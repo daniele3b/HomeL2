@@ -86,6 +86,7 @@ function receiveInfo() {
                 cash: info.cash,
                 email: info.email,
                 lang: info.lang,
+                template_id: info.template_id
               });
             },
             {
