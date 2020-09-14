@@ -3,6 +3,8 @@ const router = express.Router();
 var multer = require("multer");
 const path = require("path");
 const config = require("config");
+const fs = require("fs");
+
 const {
   RemoveEscapeChar,
   PandocDocx2Md,
@@ -42,6 +44,16 @@ router.post(
 
 router.get("/loadingTemplate", async (req, res) => {
   res.sendFile(path.join(__dirname, "../views", "loadingTemplate.html"));
+});
+
+router.delete("/removeTemplate/:language/:template_id", async (req, res) => {
+  const lang = req.params.language.toLowerCase();
+  const template_id = req.params.template_id;
+  var folder = config.get("template_location_output");
+  var toRemove = path.join(folder, "servizio" + lang + template_id + ".md");
+  fs.unlinkSync(toRemove);
+  console.log("Template removed!");
+  res.status(200).send("Template removed!");
 });
 
 module.exports = router;

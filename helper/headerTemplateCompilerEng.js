@@ -1,4 +1,4 @@
-function headerTemplateWriterT4(data) {
+function headerTemplateWriterENGT4(data) {
   const toReturn =
     "--- \n name: " +
     data.name +
@@ -18,7 +18,7 @@ function headerTemplateWriterT4(data) {
   return toReturn;
 }
 
-function headerTemplateWriterT5(data) {
+function headerTemplateWriterENGT5(data) {
   const toReturn =
     "--- \n name: " +
     data.name +
@@ -36,7 +36,7 @@ function headerTemplateWriterT5(data) {
   return toReturn;
 }
 
-function headerTemplateWriterT6(data) {
+function headerTemplateWriterENGT6(data) {
   const toReturn =
     "--- \n name: " +
     data.name +
@@ -52,7 +52,7 @@ function headerTemplateWriterT6(data) {
   return toReturn;
 }
 
-function headerTemplateWriterT7(data) {
+function headerTemplateWriterENGT7(data) {
   const toReturn =
     "--- \n day: " +
     data.month +
@@ -68,7 +68,7 @@ function headerTemplateWriterT7(data) {
   return toReturn;
 }
 
-exports.headerTemplateWriterT4 = headerTemplateWriterT4;
-exports.headerTemplateWriterT5 = headerTemplateWriterT5;
-exports.headerTemplateWriterT6 = headerTemplateWriterT6;
-exports.headerTemplateWriterT7 = headerTemplateWriterT7;
+exports.headerTemplateWriterENGT4 = headerTemplateWriterENGT4;
+exports.headerTemplateWriterENGT5 = headerTemplateWriterENGT5;
+exports.headerTemplateWriterENGT6 = headerTemplateWriterENGT6;
+exports.headerTemplateWriterENGT7 = headerTemplateWriterENGT7;

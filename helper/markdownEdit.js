@@ -7,11 +7,11 @@ const { DigitalSign } = require("../helper/digitalSignature");
 const { digitalSignatureRSA } = require("../helper/digitalSignatureRSA");
 const axios = require("axios");
 const {
-  headerTemplateWriterT4,
-  headerTemplateWriterT5,
-  headerTemplateWriterT6,
-  headerTemplateWriterT7,
-} = require("./headerTemplateCompiler");
+  headerTemplateWriterENGT4,
+  headerTemplateWriterENGT5,
+  headerTemplateWriterENGT6,
+  headerTemplateWriterENGT7,
+} = require("./headerTemplateCompilerEng");
 var randomstring = require("randomstring");
 
 async function Pandoc(src, out) {
@@ -63,7 +63,7 @@ function markdownEditFile(data, name_file) {
       if (data.template_id == "T4") {
         fs.writeFile(
           config.get("tmp_location") + name_file + ".md",
-          headerTemplateWriterT4(data),
+          headerTemplateWriterENGT4(data),
           function (err) {
             if (err) {
               throw err;
@@ -75,7 +75,7 @@ function markdownEditFile(data, name_file) {
       } else if (data.template_id == "T5") {
         fs.writeFile(
           config.get("tmp_location") + name_file + ".md",
-          headerTemplateWriterT5(data),
+          headerTemplateWriterENGT5(data),
           function (err) {
             if (err) {
               throw err;
@@ -87,7 +87,7 @@ function markdownEditFile(data, name_file) {
       } else if (data.template_id == "T6") {
         fs.writeFile(
           config.get("tmp_location") + name_file + ".md",
-          headerTemplateWriterT6(data),
+          headerTemplateWriterENGT6(data),
           function (err) {
             if (err) {
               throw err;
@@ -99,7 +99,7 @@ function markdownEditFile(data, name_file) {
       } else if (data.template_id == "T7") {
         fs.writeFile(
           config.get("tmp_location") + name_file + ".md",
-          headerTemplateWriterT7(data),
+          headerTemplateWriterENGT7(data),
           function (err) {
             if (err) {
               throw err;
