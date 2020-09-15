@@ -37,7 +37,7 @@ router.post(
       toPath = toPath.replace(".docx", ".md");
       await PandocDocx2Md(fromPath, toPath);
       await RemoveEscapeChar(toPath);
-      res.status(200).send("File loaded!");
+      res.redirect(config.get("HomeLess") + "/en/credentialVerification");
     }
   }
 );
