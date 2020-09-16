@@ -27,7 +27,7 @@ router.post(
   async (req, res, next) => {
     const file = req.file;
     if (!file) {
-      res.status(400).send("Bad request!");
+      res.redirect(config.get("HomeLess") + "/en/credentialVerification");
     } else {
       //Creating template
       var moveTo = config.get("template_location_output");
